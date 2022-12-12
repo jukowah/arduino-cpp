@@ -54,21 +54,44 @@ struct byte_t {
     uint8_t low  : 4;
 };
 
-struct ByteResource {
+/*
 
+TODO: 
+* Move away from std::allocator for better
+    - References
+    - Smart pointers, resource becomes a unique one, get functions return shared refs
+    - Memory resources, somewhat obscure, could be better for regional stuff
+*/
+class ByteResource {
+private:
+    byte_t *resource;
+public:
     ByteResource() {
         std::allocator<byte_t> alloc;
-        uint8_t *res = reinterpret_cast<uint8_t *>(alloc.allocate(1));
+        this->resource = alloc.allocate(1);
     };
+
+    void set_low_nibble(uint8_t low)   { this->resource->low  = low;  }
+    void set_high_nibble(uint8_t high) { this->resource->high = high; }
+
+    // Force ceils nibble into high nibble to preserve information
+    uint8_t *get_low_nibble() {
+        return reinterpret_cast<uint8_t *>(new byte_t { .high=resource->low, .low=0 });
+    }
+
+    // Force ceils nibble into high nibble to preserve information
+    uint8_t *get_high_nibble() {
+        return reinterpret_cast<uint8_t *>(new byte_t { .high=resource->high, .low=0 });
+    }
 };
 
 int main() {
+    auto res = new ByteResource();
     
-    std::allocator<byte_t> alloc;
-    auto *res =(alloc.allocate(1));
+    res->set_high_nibble(10);
+    res->set_low_nibble(3);
 
-    res[0] = byte_t { .high = 2, .low = 0 };
-    std::cout << static_cast<int>(*reinterpret_cast<uint8_t *>(res));
-
+    std::cout << static_cast<int>(*res->get_high_nibble()) << std::endl;
+    std::cout << static_cast<int>(*res->get_low_nibble())  << std::endl;
     return 0;
 }
