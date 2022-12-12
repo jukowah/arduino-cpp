@@ -66,17 +66,16 @@ class ByteResource {
 private:
     byte_t *resource;
 public:
-    ByteResource() {
-        std::allocator<byte_t> alloc;
-        this->resource = alloc.allocate(1);
+    ByteResource(uint8_t high_, uint8_t low_) {
+        this->resource = new byte_t {.high=high_, .low=low_}; // persistent allocation
     };
 
-    void set_low_nibble(uint8_t low)   { this->resource->low  = low;  }
+    void set_low_nibble (uint8_t low)  { this->resource->low  = low;  }
     void set_high_nibble(uint8_t high) { this->resource->high = high; }
 
     // Force ceils nibble into high nibble to preserve information
     uint8_t *get_low_nibble() {
-        return reinterpret_cast<uint8_t *>(new byte_t { .high=resource->low, .low=0 });
+        return reinterpret_cast<uint8_t *>(new byte_t { .high=resource->low, .low=0 }); //gets moved
     }
 
     // Force ceils nibble into high nibble to preserve information
