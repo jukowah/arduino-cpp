@@ -85,7 +85,10 @@ public:
 };
 
 int main() {
-    auto res = new ByteResource();
+    auto res = new ByteResource(0, 0);
+    
+    std::cout << static_cast<int>(*res->get_high_nibble()) << std::endl;
+    std::cout << static_cast<int>(*res->get_low_nibble())  << std::endl;
     
     res->set_high_nibble(10);
     res->set_low_nibble(3);
