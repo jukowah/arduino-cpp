@@ -1,0 +1,5 @@
+/home/jukowah/projects/mirror/build/CMakeFiles/edit_cache.dir
+/home/jukowah/projects/mirror/build/CMakeFiles/rebuild_cache.dir
+/home/jukowah/projects/mirror/build/source/CMakeFiles/mirrorgame.dir
+/home/jukowah/projects/mirror/build/source/CMakeFiles/edit_cache.dir
+/home/jukowah/projects/mirror/build/source/CMakeFiles/rebuild_cache.dir

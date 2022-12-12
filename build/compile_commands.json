@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/jukowah/projects/mirror/build",
+  "command": "/usr/bin/c++ -DLIBTCOD_STATIC -DTCOD_NO_THREADS -isystem /usr/include/SDL2 -g -std=c++20 -o source/CMakeFiles/mirrorgame.dir/components/actor.cpp.o -c /home/jukowah/projects/mirror/source/components/actor.cpp",
+  "file": "/home/jukowah/projects/mirror/source/components/actor.cpp"
+},
+{
+  "directory": "/home/jukowah/projects/mirror/build",
+  "command": "/usr/bin/c++ -DLIBTCOD_STATIC -DTCOD_NO_THREADS -isystem /usr/include/SDL2 -g -std=c++20 -o source/CMakeFiles/mirrorgame.dir/main.cpp.o -c /home/jukowah/projects/mirror/source/main.cpp",
+  "file": "/home/jukowah/projects/mirror/source/main.cpp"
+}
+]
