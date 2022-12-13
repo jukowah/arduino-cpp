@@ -64,16 +64,16 @@ TODO:
 */
 class ByteResource {
 private:
-    byte_t *resource;
+    std::unique_ptr<byte_t> resource;
 public:
     ByteResource(uint8_t high_, uint8_t low_) {
-        this->resource = new byte_t {.high=high_, .low=low_}; // persistent allocation
+        this->resource = std::unique_ptr(new byte_t {.high=high_, .low=low_}); // persistent allocation
     };
 
     void set_low_nibble (uint8_t low)  { this->resource->low  = low;  }
     void set_high_nibble(uint8_t high) { this->resource->high = high; }
 
-    // Force ceils nibble into high nibble to preserve information
+    // Force ceils nibble into high nibble to preserve information, use in-place swapping for bitfields
     uint8_t *get_low_nibble() {
         return reinterpret_cast<uint8_t *>(new byte_t { .high=resource->low, .low=0 }); //gets moved
     }
@@ -82,6 +82,11 @@ public:
     uint8_t *get_high_nibble() {
         return reinterpret_cast<uint8_t *>(new byte_t { .high=resource->high, .low=0 });
     }
+    
+    std::pair<std::unique_ptr<std::byte>, std::unique_ptr<std::byte>> nibble() {
+        auto *res = resource.release();
+        return std::make_pair(std::make_unique(res), std::make_unique(res));
+    };
 };
 
 int main() {
